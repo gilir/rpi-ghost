@@ -1,6 +1,8 @@
 # http://support.ghost.org/supported-node-versions/
 # https://github.com/nodejs/LTS
-FROM node:4-slim
+FROM armhf/node:4.7-slim
+
+LABEL maintainer="Julien Lavergne <julien@lavergne.online>
 
 RUN groupadd user && useradd --create-home --home-dir /home/user -g user user
 
@@ -23,9 +25,13 @@ ENV GHOST_VERSION 0.11.4
 
 RUN buildDeps=' \
 		gcc \
+		g++ \
+		python-software-properties \
 		make \
 		python \
 		unzip \
+		build-essential \
+		sqlite3 \
 	' \
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
