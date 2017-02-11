@@ -2,7 +2,7 @@
 # https://github.com/nodejs/LTS
 FROM armhf/node:4.7-slim
 
-LABEL maintainer="Julien Lavergne <julien@lavergne.online>
+LABEL maintainer="Julien Lavergne <julien@lavergne.online> node_version="4.7-slim" ghost_version="0.11.4" original_maintainer="https://github.com/docker-library/ghost"
 
 RUN groupadd user && useradd --create-home --home-dir /home/user -g user user
 
