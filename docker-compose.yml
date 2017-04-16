@@ -9,8 +9,8 @@ services:
     labels:
       - "traefik.frontend.rule=Host:lavergne.online,blog.lavergne.online,ghost.lavergne.online"
     volumes:
-      # Blog data, host on current folder data/
-      - ./data:/var/lib/ghost
+      # Blog data, host on ghost_data volume
+      - ghost_data:/var/lib/ghost
     restart: always
     networks:
       - proxy-network
@@ -21,3 +21,6 @@ networks:
     external:
       name: proxy-network
 
+volumes:
+  ghost_data:
+    external: true
