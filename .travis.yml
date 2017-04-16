@@ -1,18 +1,14 @@
+sudo: required
+
+services:
+ - docker
+
 language: bash
-services: docker
-
-install:
-  - git clone https://github.com/gilir/rpi-ghost ~/rpi-images
-
-before_script:
-  - env | sort
-  - image='rpi/gilir-ghost'
 
 script:
-  - docker build -t "$image" .
-  - ~/rpi-images/test/run.sh "$image"
-
-after_script:
-  - docker images
-
-# vim:set et ts=2 sw=2:
+# prepare qemu
+ - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+# build image
+ - docker build -t gilir/rpi-ghost:build .
+# test image
+ - docker run gilir/rpi-ghost:build version
