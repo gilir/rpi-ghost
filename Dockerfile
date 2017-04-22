@@ -2,7 +2,10 @@
 # https://github.com/nodejs/LTS
 FROM armhf/node:4.7-slim
 
-LABEL maintainer="Julien Lavergne <julien@lavergne.online> node_version="4.7-slim" ghost_version="0.11.5" original_maintainer="https://github.com/docker-library/ghost"
+LABEL maintainer="Julien Lavergne <julien@lavergne.online> \
+      node_version="4.7-slim" \
+      ghost_version="0.11.8" \
+      original_maintainer="https://github.com/docker-library/ghost"
 
 RUN groupadd user && useradd --create-home --home-dir /home/user -g user user
 
@@ -21,7 +24,7 @@ RUN set -x \
 ENV GHOST_SOURCE /usr/src/ghost
 WORKDIR $GHOST_SOURCE
 
-ENV GHOST_VERSION 0.11.5
+ENV GHOST_VERSION 0.11.8
 
 RUN buildDeps=' \
 		gcc \
