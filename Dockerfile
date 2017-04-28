@@ -1,62 +1,53 @@
-# http://support.ghost.org/supported-node-versions/
-# https://github.com/nodejs/LTS
-FROM armhf/node:4.7-slim
-
-LABEL maintainer="Julien Lavergne <julien@lavergne.online> \
-      node_version="4.7-slim" \
-      ghost_version="0.11.8" \
-      original_maintainer="https://github.com/docker-library/ghost"
-
-RUN groupadd user && useradd --create-home --home-dir /home/user -g user user
-
-# grab gosu for easy step-down from root
-ENV GOSU_VERSION 1.7
-RUN set -x \
-	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
-	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
-	&& export GNUPGHOME="$(mktemp -d)" \
-	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
-	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
-	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
-	&& chmod +x /usr/local/bin/gosu \
-	&& gosu nobody true
+FROM armhf/alpine:3.5
 
 ENV GHOST_SOURCE /usr/src/ghost
 WORKDIR $GHOST_SOURCE
 
 ENV GHOST_VERSION 0.11.8
 
-RUN buildDeps=' \
-		gcc \
-		g++ \
-		python-software-properties \
-		make \
-		python \
-		unzip \
-		build-essential \
-		sqlite3 \
-	' \
-	&& set -x \
-	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends && rm -rf /var/lib/apt/lists/* \
-	&& wget -O ghost.zip "https://github.com/TryGhost/Ghost/releases/download/${GHOST_VERSION}/Ghost-${GHOST_VERSION}.zip" \
-	&& unzip ghost.zip \
-	&& npm install --production --loglevel=info\
-	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false $buildDeps \
-	&& rm ghost.zip \
-	&& npm cache clean \
-	&& rm -rf /tmp/npm*
+RUN BUILD_DEPS=" \
+	gcc \
+	g++ \
+	make \
+	python \
+	unzip \
+	build-base \
+    wget \
+	sqlite" \
+ && apk -U upgrade && apk add \
+    ${BUILD_DEPS} \
+    nodejs \
+    su-exec \
+ && wget -O ghost.zip "https://github.com/TryGhost/Ghost/releases/download/${GHOST_VERSION}/Ghost-${GHOST_VERSION}.zip" \
+ && unzip ghost.zip \
+ && npm install --production --loglevel=info\
+ && rm ghost.zip \
+ && npm cache clean \
+ && apk del ${BUILD_DEPS} \
+ && rm -rf /var/cache/apk/* /tmp/*
 
 ENV GHOST_CONTENT /var/lib/ghost
+
+RUN adduser -D -h /home/user -g user user
+
 RUN mkdir -p "$GHOST_CONTENT" \
 	&& chown -R user:user "$GHOST_CONTENT" \
 # Ghost expects "config.js" to be in $GHOST_SOURCE, but it's more useful for
 # image users to manage that as part of their $GHOST_CONTENT volume, so we
 # symlink.
 	&& ln -s "$GHOST_CONTENT/config.js" "$GHOST_SOURCE/config.js"
+
 VOLUME $GHOST_CONTENT
 
 COPY docker-entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+
+LABEL maintainer="Julien Lavergne <julien@lavergne.online> \
+      alpine_version="3.5" \
+      ghost_version="${GHOST_VERSION}" \
+      original_maintainer="https://github.com/docker-library/ghost"
 
 EXPOSE 2368
+
+ENTRYPOINT ["/entrypoint.sh"]
+
 CMD ["npm", "start"]
