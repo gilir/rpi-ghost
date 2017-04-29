@@ -4,7 +4,7 @@ set -e
 # allow the container to be started with `--user`
 if [[ "$*" == npm*start* ]] && [ "$(id -u)" = '0' ]; then
 	chown -R user "$GHOST_CONTENT"
-	exec gosu user "$BASH_SOURCE" "$@"
+	exec su-exec user "$BASH_SOURCE" "$@"
 fi
 
 if [[ "$*" == npm*start* ]]; then
