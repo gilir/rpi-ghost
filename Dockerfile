@@ -5,7 +5,7 @@ WORKDIR $GHOST_SOURCE
 
 ARG GHOST_VERSION 0.11.8
 
-RUN BUILD_DEPS=" \
+RUN apk --no-cache add --virtual build-dependencies \
 	gcc \
 	g++ \
 	make \
@@ -13,17 +13,16 @@ RUN BUILD_DEPS=" \
 	unzip \
 	build-base \
     wget \
-	sqlite" \
- && apk -U upgrade && apk add \
-    ${BUILD_DEPS} \
+	sqlite \
+    && apk --no-cache add \
     nodejs \
     su-exec \
  && wget -O ghost.zip "https://github.com/TryGhost/Ghost/releases/download/${GHOST_VERSION}/Ghost-${GHOST_VERSION}.zip" \
  && unzip ghost.zip \
- && npm install --production --loglevel=info\
+ && npm install --production --loglevel=info \
  && rm ghost.zip \
  && npm cache clean \
- && apk del ${BUILD_DEPS} \
+ && apk del build-dependencies \
  && rm -rf /var/cache/apk/* /tmp/*
 
 ENV GHOST_CONTENT /var/lib/ghost
