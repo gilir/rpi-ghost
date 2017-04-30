@@ -1,9 +1,9 @@
 FROM armhf/alpine:3.5
 
-ENV GHOST_SOURCE /usr/src/ghost
+ARG GHOST_SOURCE /usr/src/ghost
 WORKDIR $GHOST_SOURCE
 
-ENV GHOST_VERSION 0.11.8
+ARG GHOST_VERSION 0.11.8
 
 RUN BUILD_DEPS=" \
 	gcc \
