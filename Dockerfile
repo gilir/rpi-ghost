@@ -2,7 +2,10 @@ FROM armhf/alpine:3.5
 
 # Upgrating the image first, to have the last version of all packages, and to
 # share the same layer accros the images
-RUN apk --no-cache upgrade 
+RUN apk --no-cache upgrade
+    && apk --no-cache add 
+       su-exec \
+       ca-certificates \
     && apk cache clean
     && rm -rf /var/cache/apk/*
 
@@ -23,7 +26,10 @@ RUN apk --no-cache add --virtual build-dependencies \
 	sqlite \
     && apk --no-cache add \
     nodejs \
-    su-exec \
+# Add for "--one-file-system" argument
+    tar \
+# Add for "[["
+    bash \
  && wget -O ghost.zip "https://github.com/TryGhost/Ghost/releases/download/${GHOST_VERSION}/Ghost-${GHOST_VERSION}.zip" \
  && unzip ghost.zip \
  && npm install --production --loglevel=info \
