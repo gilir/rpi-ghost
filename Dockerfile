@@ -1,9 +1,16 @@
 FROM armhf/alpine:3.5
 
+# Upgrating the image first, to have the last version of all packages, and to
+# share the same layer accros the images
+RUN apk --no-cache upgrade 
+    && apk cache clean
+    && rm -rf /var/cache/apk/*
+
+# Version
+ARG GHOST_VERSION 0.11.8
+
 ARG GHOST_SOURCE /usr/src/ghost
 WORKDIR $GHOST_SOURCE
-
-ARG GHOST_VERSION 0.11.8
 
 RUN apk --no-cache add --virtual build-dependencies \
 	gcc \
