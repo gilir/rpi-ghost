@@ -11,7 +11,7 @@ RUN apk --no-cache upgrade \
 # Version
 ARG GHOST_VERSION=0.11.8
 
-ARG GHOST_SOURCE=/usr/src/ghost
+ENV GHOST_SOURCE /usr/src/ghost
 WORKDIR $GHOST_SOURCE
 
 RUN apk --no-cache add --virtual build-dependencies \
