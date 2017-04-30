@@ -6,7 +6,6 @@ RUN apk --no-cache upgrade \
     && apk --no-cache add \
        su-exec \
        ca-certificates \
-    && apk cache clean \
     && rm -rf /var/cache/apk/*
 
 # Version
