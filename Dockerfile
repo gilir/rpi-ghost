@@ -26,6 +26,8 @@ RUN apk --no-cache add --virtual build-dependencies \
 	sqlite \
     && apk --no-cache add \
     nodejs \
+    libressl \
+    grep \
 # Add for "--one-file-system" argument
     tar \
 # Add for "[["
