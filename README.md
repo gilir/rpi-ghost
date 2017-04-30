@@ -1,8 +1,9 @@
 # Ghost - ARM builds for Raspberry PI
 [![Docker Stars](https://img.shields.io/docker/stars/gilir/rpi-ghost.svg?maxAge=2592000)](https://hub.docker.com/r/gilir/rpi-ghost/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/gilir/rpi-ghost.svg?maxAge=2592000)](https://hub.docker.com/r/gilir/rpi-ghost/)
-[![Docker Image Size](https://img.shields.io/imagelayers/image-size/gilir/rpi-ghost/latest.svg)](https://imagelayers.io/?images=gilir/rpi-ghost:latest)
-[![Docker Layers](https://img.shields.io/imagelayers/layers/gilir/rpi-ghost/latest.svg)](https://imagelayers.io/?images=gilir/rpi-ghost:latest)
+[![Docker Image](https://images.microbadger.com/badges/image/gilir/rpi-ghost.svg)](https://microbadger.com/images/gilir/rpi-ghost "Get your own image badge on microbadger.com")
+[![Version](https://images.microbadger.com/badges/version/gilir/rpi-ghost.svg)](https://microbadger.com/images/gilir/rpi-ghost "Get your own version badge on microbadger.com")
+
 
 ## About Ghost
 Ghost is a free and open source blogging platform written in JavaScript.
@@ -36,3 +37,5 @@ And run it with:
 ```
 docker-compose up -d
 ```
+
+
