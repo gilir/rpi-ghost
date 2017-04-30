@@ -38,4 +38,8 @@ And run it with:
 docker-compose up -d
 ```
 
+# Sources
+Gogs: https://gogs.lavergne.online/gilir/rpi-ghost.git
+Github: https://github.com/gilir/rpi-ghost
+
 
