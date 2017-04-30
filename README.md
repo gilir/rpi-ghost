@@ -1,8 +1,8 @@
 # Ghost - ARM builds for Raspberry PI
 [![Docker Stars](https://img.shields.io/docker/stars/gilir/rpi-ghost.svg?maxAge=2592000)](https://hub.docker.com/r/gilir/rpi-ghost/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/gilir/rpi-ghost.svg?maxAge=2592000)](https://hub.docker.com/r/gilir/rpi-ghost/)
-[![Docker Image Size] (https://img.shields.io/imagelayers/image-size/gilir/rpi-ghost.svg?maxAge=2592000)](https://hub.docker.com/r/gilir/rpi-ghost/)
-[![Docker Layers] (https://img.shields.io/imagelayers/layers/gilir/rpi-ghost.svg?maxAge=2592000)](https://hub.docker.com/r/gilir/rpi-ghost/)
+[![Docker Image Size](https://img.shields.io/imagelayers/image-size/gilir/rpi-ghost/latest.svg)](https://imagelayers.io/?images=gilir/rpi-ghost:latest)
+[![Docker Layers](https://img.shields.io/imagelayers/layers/gilir/rpi-ghost/latest.svg)](https://imagelayers.io/?images=gilir/rpi-ghost:latest)
 
 ## About Ghost
 Ghost is a free and open source blogging platform written in JavaScript.
