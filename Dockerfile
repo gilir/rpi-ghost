@@ -2,11 +2,11 @@ FROM armhf/alpine:3.5
 
 # Upgrating the image first, to have the last version of all packages, and to
 # share the same layer accros the images
-RUN apk --no-cache upgrade
-    && apk --no-cache add 
+RUN apk --no-cache upgrade \
+    && apk --no-cache add \
        su-exec \
        ca-certificates \
-    && apk cache clean
+    && apk cache clean \
     && rm -rf /var/cache/apk/*
 
 # Version
