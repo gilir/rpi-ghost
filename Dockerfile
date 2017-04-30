@@ -50,7 +50,8 @@ COPY docker-entrypoint.sh /entrypoint.sh
 LABEL maintainer="Julien Lavergne <julien@lavergne.online> \
       alpine_version="3.5" \
       ghost_version="${GHOST_VERSION}" \
-      original_maintainer="https://github.com/docker-library/ghost"
+      original_maintainer="https://github.com/docker-library/ghost" \
+      original_maintainer_url="https://github.com/docker-library/ghost/blob/master/alpine/Dockerfile"
 
 EXPOSE 2368
 
