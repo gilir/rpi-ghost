@@ -1,4 +1,4 @@
-# Ghost - ARM builds for Raspberry PI
+# Ghost - Docker ARM builds for Raspberry PI
 [![Docker Stars](https://img.shields.io/docker/stars/gilir/rpi-ghost.svg?maxAge=2592000)](https://hub.docker.com/r/gilir/rpi-ghost/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/gilir/rpi-ghost.svg?maxAge=2592000)](https://hub.docker.com/r/gilir/rpi-ghost/)
 [![Docker Image](https://images.microbadger.com/badges/image/gilir/rpi-ghost.svg)](https://microbadger.com/images/gilir/rpi-ghost "Get your own image badge on microbadger.com")
@@ -6,10 +6,10 @@
 
 
 ## About Ghost
-Ghost is a free and open source blogging platform written in JavaScript.
+[Ghost](https://ghost.org/) is a free and open source blogging platform written in JavaScript.
 
-## ARM build, for Rapsberry PI
-Based on official alpine version of Dockerbuild. See Tags for the version of Ghost available.
+## ARM build, for Raspberry PI
+Based on official alpine version of Dockerbuild. See Tags for the versions of Ghost available.
 
 ## Features
 - Alpine 3.5
@@ -39,7 +39,5 @@ docker-compose up -d
 ```
 
 # Sources
-Gogs: https://gogs.lavergne.online/gilir/rpi-ghost.git
-Github: https://github.com/gilir/rpi-ghost
-
-
+- Gogs: https://gogs.lavergne.online/gilir/rpi-ghost.git
+- Github: https://github.com/gilir/rpi-ghost
