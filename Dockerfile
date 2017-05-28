@@ -9,7 +9,7 @@ RUN apk --no-cache upgrade \
     && rm -rf /var/cache/apk/*
 
 # Version
-ARG GHOST_VERSION=0.11.8
+ARG GHOST_VERSION=0.11.9
 
 ENV GHOST_SOURCE /usr/src/ghost
 WORKDIR $GHOST_SOURCE
