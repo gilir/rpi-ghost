@@ -1,4 +1,4 @@
-FROM armhf/alpine:3.5
+FROM arm32v6/alpine:3.6
 
 # Upgrating the image first, to have the last version of all packages, and to
 # share the same layer accros the images
@@ -11,7 +11,11 @@ RUN apk --no-cache upgrade \
 # Version
 ARG GHOST_VERSION=0.11.9
 
-ENV GHOST_SOURCE /usr/src/ghost
+ENV GHOST_SOURCE=/usr/src/ghost \
+    UID=991 \
+    GID=991 \
+    GHOST_CONTENT=/var/lib/ghost
+
 WORKDIR $GHOST_SOURCE
 
 RUN apk --no-cache add --virtual build-dependencies \
@@ -37,25 +41,19 @@ RUN apk --no-cache add --virtual build-dependencies \
  && rm ghost.zip \
  && npm cache clean \
  && apk del build-dependencies \
- && rm -rf /var/cache/apk/* /tmp/*
-
-ENV GHOST_CONTENT /var/lib/ghost
-
-RUN adduser -D -h /home/user -g user user
-
-RUN mkdir -p "$GHOST_CONTENT" \
-	&& chown -R user:user "$GHOST_CONTENT" \
+ && rm -rf /var/cache/apk/* /tmp/* \
+ && mkdir -p "$GHOST_CONTENT" \
 # Ghost expects "config.js" to be in $GHOST_SOURCE, but it's more useful for
 # image users to manage that as part of their $GHOST_CONTENT volume, so we
 # symlink.
-	&& ln -s "$GHOST_CONTENT/config.js" "$GHOST_SOURCE/config.js"
+ && ln -s "$GHOST_CONTENT/config.js" "$GHOST_SOURCE/config.js"
 
 VOLUME $GHOST_CONTENT
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
 LABEL maintainer="Julien Lavergne <julien@lavergne.online> \
-      alpine_version="3.5" \
+      alpine_version="3.6" \
       ghost_version="${GHOST_VERSION}" \
       original_maintainer="https://github.com/docker-library/ghost" \
       original_maintainer_url="https://github.com/docker-library/ghost/blob/master/alpine/Dockerfile"

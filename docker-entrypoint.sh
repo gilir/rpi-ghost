@@ -25,4 +25,15 @@ if [[ "$*" == npm*start* ]]; then
 	fi
 fi
 
-exec "$@"
+echo "Updating permissions..."
+for dir in "$GHOST_CONTENT"; do
+  if $(find $dir ! -user $UID -o ! -group $GID|egrep '.' -q); then
+    echo "Updating permissions in $dir..."
+    chown -R $UID:$GID $dir
+  else
+    echo "Permissions in $dir are correct."
+  fi
+done
+echo "Done updating permissions."
+
+exec su-exec $UID:$GID "$@"
