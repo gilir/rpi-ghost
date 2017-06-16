@@ -9,7 +9,7 @@ RUN apk --no-cache upgrade \
     && rm -rf /var/cache/apk/*
 
 # Version
-ARG GHOST_VERSION=0.11.9
+ARG GHOST_VERSION=0.11.10
 
 ENV GHOST_SOURCE=/usr/src/ghost \
     UID=991 \
