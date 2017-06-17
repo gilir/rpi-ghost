@@ -19,16 +19,17 @@ ENV GHOST_SOURCE=/usr/src/ghost \
 WORKDIR $GHOST_SOURCE
 
 RUN apk --no-cache add --virtual build-dependencies \
-	gcc \
-	g++ \
-	make \
-	python \
-	unzip \
-	build-base \
+    gcc \
+    g++ \
+    make \
+    python \
+    unzip \
+    build-base \
     wget \
-	sqlite \
-    && apk --no-cache add \
+    sqlite \
+ && apk --no-cache add \
     nodejs \
+    nodejs-npm \
     libressl \
     grep \
 # Add for "--one-file-system" argument
