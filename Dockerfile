@@ -5,62 +5,48 @@ FROM arm32v6/alpine:3.6
 RUN apk --no-cache upgrade \
     && apk --no-cache add \
        su-exec \
-       ca-certificates \
-    && rm -rf /var/cache/apk/*
+       ca-certificates
 
-# Version
-ARG GHOST_VERSION=0.11.10
+ARG VERSION=1.5.0
 
-ENV GHOST_SOURCE=/usr/src/ghost \
-    UID=991 \
-    GID=991 \
-    GHOST_CONTENT=/var/lib/ghost
+ENV GHOST_NODE_VERSION_CHECK=false \
+    NODE_ENV=production \
+    GID=991 UID=991 \
+    ADDRESS=https://my-ghost-blog.com \
+    ENABLE_ISSO=False \
+    ISSO_HOST=isso.domain.tld \
+    ISSO_AVATAR=false \
+    ISSO_VOTE=false \
+    ENABLE_DISQUS=False \
+    DISQUS_SHORTNAME=shortname
 
-WORKDIR $GHOST_SOURCE
+WORKDIR /ghost
 
-RUN apk --no-cache add --virtual build-dependencies \
-    gcc \
-    g++ \
-    make \
-    python \
-    unzip \
-    build-base \
-    wget \
-    sqlite \
- && apk --no-cache add \
-    nodejs \
-    nodejs-npm \
-    libressl \
-    grep \
-# Add for "--one-file-system" argument
-    tar \
-# Add for "[["
+RUN apk -U --no-cache add \
     bash \
- && wget -O ghost.zip "https://github.com/TryGhost/Ghost/releases/download/${GHOST_VERSION}/Ghost-${GHOST_VERSION}.zip" \
- && unzip ghost.zip \
- && npm install --production --loglevel=info \
- && rm ghost.zip \
- && npm cache clean \
- && apk del build-dependencies \
- && rm -rf /var/cache/apk/* /tmp/* \
- && mkdir -p "$GHOST_CONTENT" \
-# Ghost expects "config.js" to be in $GHOST_SOURCE, but it's more useful for
-# image users to manage that as part of their $GHOST_CONTENT volume, so we
-# symlink.
- && ln -s "$GHOST_CONTENT/config.js" "$GHOST_SOURCE/config.js"
+    ca-certificates \
+    grep \
+    libressl \
+    nodejs-current \
+    nodejs-current-npm \
+    s6 \
+    su-exec \
+    vim \
+ && wget -q https://github.com/TryGhost/Ghost/releases/download/${VERSION}/Ghost-${VERSION}.zip -P /tmp \
+ && unzip -q /tmp/Ghost-${VERSION}.zip -d /ghost \
+ && npm install --production \
+ && mv content/themes/casper casper
 
-VOLUME $GHOST_CONTENT
+COPY rootfs /
 
-COPY docker-entrypoint.sh /entrypoint.sh
-
-LABEL maintainer="Julien Lavergne <julien@lavergne.online> \
-      alpine_version="3.6" \
-      ghost_version="${GHOST_VERSION}" \
-      original_maintainer="https://github.com/docker-library/ghost" \
-      original_maintainer_url="https://github.com/docker-library/ghost/blob/master/alpine/Dockerfile"
+RUN chmod +x /usr/local/bin/* /etc/s6.d/*/* /etc/s6.d/.s6-svscan/*
 
 EXPOSE 2368
 
-ENTRYPOINT ["/entrypoint.sh"]
+VOLUME /ghost/content
 
-CMD ["npm", "start"]
+LABEL description="Ghost CMS ${VERSION}" \
+      maintainer="Wonderfall <wonderfall@targaryen.house>"
+
+ENTRYPOINT ["run.sh"]
+CMD ["/bin/s6-svscan", "/etc/s6.d"]
