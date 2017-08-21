@@ -7,7 +7,7 @@ RUN apk --no-cache upgrade \
        su-exec \
        ca-certificates
 
-ARG VERSION=1.5.0
+ARG VERSION=1.6.2
 
 ENV GHOST_NODE_VERSION_CHECK=false \
     NODE_ENV=production \
@@ -32,6 +32,13 @@ RUN apk -U --no-cache add \
     s6 \
     su-exec \
     vim \
+    build-base \
+    gcc \
+    g++ \
+    make \
+    sqlite \
+    python \
+    nodejs-current-dev \
  && wget -q https://github.com/TryGhost/Ghost/releases/download/${VERSION}/Ghost-${VERSION}.zip -P /tmp \
  && unzip -q /tmp/Ghost-${VERSION}.zip -d /ghost \
  && npm install --production \
