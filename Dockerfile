@@ -7,14 +7,14 @@ RUN apk --no-cache upgrade \
        su-exec \
        ca-certificates
 
-ARG VERSION=1.6.2
+ARG VERSION=1.17.0
 
 ENV GHOST_NODE_VERSION_CHECK=false \
     NODE_ENV=production \
     GID=991 UID=991 \
-    ADDRESS=https://my-ghost-blog.com \
+    ADDRESS=https://blog.lavergne.online \
     ENABLE_ISSO=False \
-    ISSO_HOST=isso.domain.tld \
+    ISSO_HOST=isso.lavergne.online \
     ISSO_AVATAR=false \
     ISSO_VOTE=false \
     ENABLE_DISQUS=False \
