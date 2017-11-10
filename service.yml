@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  ghost:
+    image: gilir/rpi-ghost
+#    container_name: ghost
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      labels:
+        - traefik.frontend.rule=Host:lavergne.online,blog.lavergne.online,ghost.lavergne.online
+        - traefik.docker.network=proxy-network
+        - traefik.port=2368
+        - traefik.backend=ghost
+        - traefik.frontend.entryPoints=https,http
+    ports:
+      - "2368:2368"
+#    labels:
+#      - "traefik.frontend.rule=Host:lavergne.online,blog.lavergne.online,ghost.lavergne.online"
+    volumes:
+      # Blog data, host on ghost_data volume
+      - ghost_2_data:/ghost/content
+#    restart: always
+    networks:
+      - proxy-network
+
+# Support for reverse proxy - Common network interface for all containers
+networks:
+  proxy-network:
+    external:
+      name: proxy-network
+
+volumes:
+  ghost_2_data:
+    external: true
