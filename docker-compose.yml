@@ -5,7 +5,7 @@ services:
     image: gilir/arm64-ghost
     container_name: ghost
     ports:
-      - 2368:2368
+      - 12368:2368
     labels:
       - traefik.frontend.rule=Host:lavergne.online,blog.lavergne.online,ghost.lavergne.online
       - traefik.docker.network=proxy-network
@@ -14,7 +14,7 @@ services:
       - traefik.frontend.entryPoints=https,http
     volumes:
       # Blog data, host on ghost_data volume
-      - ghost_data:/var/lib/ghost
+      - ghost_data:/ghost/content/
     restart: always
     networks:
       - proxy-network
