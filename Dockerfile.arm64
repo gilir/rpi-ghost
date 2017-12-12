@@ -27,8 +27,8 @@ RUN apk -U --no-cache add \
     ca-certificates \
     grep \
     libressl \
-    nodejs-current \
-    nodejs-current-npm \
+    nodejs \
+    nodejs-npm \
     s6 \
     su-exec \
     vim \
