@@ -39,5 +39,5 @@ docker-compose up -d
 ```
 
 # Sources
-- Gogs: https://gogs.lavergne.online/gilir/rpi-ghost.git
+- Gitea: https://gitea.lavergne.online/docker/ghost.git
 - Github: https://github.com/gilir/rpi-ghost
