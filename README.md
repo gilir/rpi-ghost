@@ -12,7 +12,7 @@
 Based on official alpine version of Dockerbuild. See Tags for the versions of Ghost available.
 
 ## Features
-- Alpine 3.6
+- Alpine 3.7
 - NodeJS 6.9
 
 ## How to use
