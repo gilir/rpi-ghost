@@ -7,7 +7,7 @@ RUN apk --no-cache upgrade \
        su-exec \
        ca-certificates
 
-ARG VERSION=2.2.2
+ARG VERSION=2.2.3
 
 ENV GHOST_NODE_VERSION_CHECK=false \
     NODE_ENV=production \
