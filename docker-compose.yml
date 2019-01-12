@@ -7,7 +7,7 @@ services:
     ports:
       - 12368:2368
     labels:
-      - traefik.frontend.rule=Host:lavergne.online,blog.lavergne.online,ghost.lavergne.online
+      - traefik.frontend.rule=Host:blog.lavergne.online,ghost.lavergne.online
       - traefik.docker.network=proxy-network
       - traefik.port=2368
       - traefik.backend=ghost
